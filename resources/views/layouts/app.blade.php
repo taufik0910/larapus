@@ -17,6 +17,8 @@
 
     <link href="/css/jquery.dataTables.css" rel="stylesheet">
 <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
+<link href="/css/selectize.css" rel="stylesheet">
+<link href="/css/selectize.bootstrap3.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -55,7 +57,13 @@
                         @role('admin')
                     <li><a href="{{ route('authors.index') }}">Penulis</a></li>
                     <li><a href="{{ route('books.index') }}">Buku</a></li>
+                    <li><a href="{{ route('members.index') }}">Member</a></li>
+                    <li><a href="{{ route('statistics.index') }}">Peminjaman</a></li>
                         @endrole
+
+                        @if (auth()->check())
+                        <li><a href="{{ url('/settings/profile') }}">Profil</a></li>
+                        @endif
 
                     </ul>
 
@@ -72,13 +80,15 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+
+                                <li><a href="{{ url('/settings/password') }}"><i class="fa fa-btn fa-lock"></i> Ubah Password</a></li>   
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
-
+                                            
                                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
@@ -102,6 +112,8 @@
 <script src="/js/jquery.dataTables.min.js"></script>
 <script src="/js/dataTables.bootstrap.min.js"></script>
 <script src="/js/custom.js"></script>
+<script type="/js/custom.select.js"></script>
+<script src="/js/selectize.min.js"></script>
 @yield('scripts')
 </body>
 </html>

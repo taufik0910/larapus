@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\BorrowLog;
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\BookException;
 
 class BooksController extends Controller
 {
@@ -176,7 +177,10 @@ public function destroy($id)
 {
 $book = Book::find($id);
 // hapus cover lama, jika ada
-if ($book->cover) {
+// 
+$cover = $book->cover;
+if(!$book->delete()) return redirect()->back();
+if($cover){
 $old_cover = $book->cover;
 $filepath = public_path() . DIRECTORY_SEPARATOR . 'img'. DIRECTORY_SEPARATOR . $book->cover;
 try {
@@ -185,7 +189,7 @@ File::delete($filepath);
 // File sudah dihapus/tidak ada
 }
 }
-$book->delete();
+
 Session::flash("flash_notification", ["level"=>"success","message"=>"Buku dihapus"]);
 return redirect()->route('books.index');
 }
@@ -197,13 +201,45 @@ public function borrow($id)
 {
 try {
 $book = Book::findOrFail($id);
-BorrowLog::create(['user_id' => Auth::user()->id,'book_id' => $id]);
+
+Auth::user()->borrow($book);
 Session::flash("flash_notification", ["level"=>"success","message"=>"Berhasil meminjam $book->title"]);
-} catch (ModelNotFoundException $e) {
-    Session::flash("flash_notification", ["level"=>"danger","message"=>"Buku tidak ditemukan."]);
+} 
+catch (BookException $e) {
+Session::flash("flash_notification", [
+"level"=> "danger","message" => $e->getMessage()]);
+} 
+catch (ModelNotFoundException $e) {
+    Session::flash("flash_notification", ["level"=> "danger","message" => "Buku tidak ditemukan."]);
 }
 return redirect('/');
 }
+
+
+
+public function returnBack($book_id)
+    {
+        $borrowLog = BorrowLog::where('user_id', Auth::user()-> id)
+            ->where('book_id', $book_id)
+            ->where('is_returned', 0)
+            ->first();
+
+        if ($borrowLog) {
+            $borrowLog->is_returned = true;
+            $borrowLog->save();
+
+            Session::flash("flash_notification", [
+                "level"=>"success",
+                "message"=>"Berhasil mengembalikan " . $borrowLog->book->title
+            ]);
+        }
+
+        return redirect('/home');
+    }
+
+
+
+
 
 
 
