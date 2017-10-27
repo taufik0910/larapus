@@ -24,7 +24,11 @@ Auth::logout();
 Session::flash("flash_notification", [
 "level"
 => "warning",
+<<<<<<< HEAD
+"message" => "Akun Anda belum aktif. Silahkan klik pada link aktivasi yang telah kami
+=======
 "message" => "Akun Anda belum aktif. Silahkan klik pada link aktivasi yang telah kami\
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34
 kirim."
 ]);
 return redirect('/login');
@@ -32,3 +36,7 @@ return redirect('/login');
 return $response;
     }
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34

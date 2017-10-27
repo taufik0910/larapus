@@ -30,6 +30,10 @@ class User extends Authenticatable
 
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34
 public function sendVerification()
 {
 $user = $this;
@@ -43,6 +47,10 @@ $m->to($user->email, $user->name)->subject('Verifikasi Akun Larapus');
 }
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34
 
     /**
      * The attributes that should be hidden for arrays.

@@ -39,12 +39,17 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->middleware('user-should-verified');
+<<<<<<< HEAD
+=======
     }
 
     public function verify(Request $request, $token) { 
 
 
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34
     }
+
+    public function verify(Request $request, $token) {  }
 
     /**
      * Get a validator for an incoming registration request.
@@ -81,3 +86,4 @@ $user->sendVerification();
 return $user;
     }
 }
+

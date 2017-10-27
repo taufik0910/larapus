@@ -15,6 +15,10 @@ class BooksSeeder extends Seeder
      */
     public function run()
     {
+
+     
+
+
         
     		// Sample penulis
 		 $author1 = Author::create(['name'=>'Mohammad Fauzil Adhim']);

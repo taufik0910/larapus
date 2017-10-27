@@ -35,10 +35,14 @@ Route::get('books/{book}/borrow', [
 'middleware' => ['auth', 'role:member'],'as'=> 'guest.books.borrow','uses'=> 'BooksController@borrow'
 ]);
 
+<<<<<<< HEAD
+Route::put('books/{book}/return',['middleware' => ['auth', 'role:member'],'as'=>'member.books.return','uses'=>'BooksController@returnBack'
+=======
 Route::put('books/{book}/return', [
 'middleware' => ['auth', 'role:member'],
 'as'=>'member.books.return',
 'uses'=>'BooksController@returnBack'
+>>>>>>> 2ddd467ce0c2e9397f56f5d63a66c275183efc34
 ]);
 
 Route::get('auth/verify/{token}', 'Auth\RegisterController@verify');
